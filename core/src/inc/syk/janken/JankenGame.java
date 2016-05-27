@@ -20,11 +20,12 @@ public class JankenGame extends ApplicationAdapter {
   Texture guTexture;
   Texture tyokiTexture;
   Texture paTexture;
+  Texture start_buttanTexture;
 
   Rectangle gu;
   Rectangle tyoki;
   Rectangle pa;
-
+  Rectangle start_buttan;
 
   @Override
   public void create () {
@@ -36,6 +37,7 @@ public class JankenGame extends ApplicationAdapter {
     guTexture = new Texture("guu.png");
     tyokiTexture = new Texture("tyoki.png");
     paTexture = new Texture("paa.png");
+    start_buttanTexture = new Texture("start.png");
 
     gu = new Rectangle();
     gu.x = 20;
@@ -55,6 +57,12 @@ public class JankenGame extends ApplicationAdapter {
     pa.width = paTexture.getWidth();
     pa.height = paTexture.getHeight();
 
+    start_buttan = new Rectangle();
+    start_buttan.x = 20;
+    start_buttan.y = SCREEN_SIZE_HEIGHT - start_buttanTexture.getHeight() - 20;
+    start_buttan.width = start_buttanTexture.getWidth();
+    start_buttan.height = start_buttanTexture.getHeight();
+
   }
 
   @Override
@@ -69,6 +77,7 @@ public class JankenGame extends ApplicationAdapter {
     batch.draw(guTexture, gu.x, gu.y);
     batch.draw(tyokiTexture,tyoki.x , tyoki.y);
     batch.draw(paTexture, pa.x, pa.y);
+    batch.draw(start_buttanTexture, start_buttan.x, start_buttan.y);
 
     camera.update();
     batch.end();
