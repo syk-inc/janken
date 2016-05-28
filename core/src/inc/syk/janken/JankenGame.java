@@ -26,7 +26,7 @@ public class JankenGame extends ApplicationAdapter {
   Rectangle gu;
   Rectangle tyoki;
   Rectangle pa;
-  Rectangle start_buttan;
+  Rectangle startButtan;
 
   @Override
   public void create () {
@@ -58,11 +58,11 @@ public class JankenGame extends ApplicationAdapter {
     pa.width = paTexture.getWidth();
     pa.height = paTexture.getHeight();
 
-    start_buttan = new Rectangle();
-    start_buttan.x = 20;
-    start_buttan.y = SCREEN_SIZE_HEIGHT - startButtanTexture.getHeight() - 20;
-    start_buttan.width = startButtanTexture.getWidth();
-    start_buttan.height = startButtanTexture.getHeight();
+    startButtan = new Rectangle();
+    startButtan.x = 20;
+    startButtan.y = SCREEN_SIZE_HEIGHT - startButtanTexture.getHeight() - 20;
+    startButtan.width = startButtanTexture.getWidth();
+    startButtan.height = startButtanTexture.getHeight();
 
 
   }
@@ -79,12 +79,12 @@ public class JankenGame extends ApplicationAdapter {
     batch.draw(guTexture, gu.x, gu.y);
     batch.draw(tyokiTexture,tyoki.x , tyoki.y);
     batch.draw(paTexture, pa.x, pa.y);
-    batch.draw(startButtanTexture, start_buttan.x, start_buttan.y);
+    batch.draw(startButtanTexture, startButtan.x, startButtan.y);
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
 
-    if (start_buttan.contains(tmp.x, tmp.y)) {
+    if (startButtan.contains(tmp.x, tmp.y)) {
       System.out.println("Is touched");
     }
 
