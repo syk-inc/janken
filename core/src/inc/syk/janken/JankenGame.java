@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class JankenGame extends ApplicationAdapter {
@@ -63,6 +64,7 @@ public class JankenGame extends ApplicationAdapter {
     start_buttan.width = startButtanTexture.getWidth();
     start_buttan.height = startButtanTexture.getHeight();
 
+
   }
 
   @Override
@@ -78,6 +80,13 @@ public class JankenGame extends ApplicationAdapter {
     batch.draw(tyokiTexture,tyoki.x , tyoki.y);
     batch.draw(paTexture, pa.x, pa.y);
     batch.draw(startButtanTexture, start_buttan.x, start_buttan.y);
+
+    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+    camera.unproject(tmp);
+
+    if (start_buttan.contains(tmp.x, tmp.y)) {
+      System.out.println("Is touched");
+    }
 
     camera.update();
     batch.end();
