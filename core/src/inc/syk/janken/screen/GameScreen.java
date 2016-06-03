@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
   Rectangle gu;
   Rectangle tyoki;
   Rectangle pa;
-  Rectangle startButtan;
+  Rectangle startButton;
 
   JankenGame game ;
   public GameScreen(JankenGame game){
@@ -68,11 +68,11 @@ public class GameScreen implements Screen {
     pa.width = paTexture.getWidth();
     pa.height = paTexture.getHeight();
 
-    startButtan = new Rectangle();
-    startButtan.x = 20;
-    startButtan.y = JankenGame.SCREEN_SIZE_HEIGHT - startButtanTexture.getHeight() - 20;
-    startButtan.width = startButtanTexture.getWidth();
-    startButtan.height = startButtanTexture.getHeight();
+    startButton = new Rectangle();
+    startButton.x = 20;
+    startButton.y = JankenGame.SCREEN_SIZE_HEIGHT - startButtanTexture.getHeight() - 20;
+    startButton.width = startButtanTexture.getWidth();
+    startButton.height = startButtanTexture.getHeight();
   }
 
   @Override
@@ -88,12 +88,12 @@ public class GameScreen implements Screen {
     batch.draw(guTexture, gu.x, gu.y);
     batch.draw(tyokiTexture,tyoki.x , tyoki.y);
     batch.draw(paTexture, pa.x, pa.y);
-    batch.draw(startButtanTexture, startButtan.x, startButtan.y);
+    batch.draw(startButtanTexture, startButton.x, startButton.y);
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
 
-    if (startButtan.contains(tmp.x, tmp.y)) {
+    if (startButton.contains(tmp.x, tmp.y)) {
       System.out.println("Is touched");
     }
 
