@@ -5,12 +5,9 @@ import com.badlogic.gdx.Screen;
 
 import inc.syk.janken.screen.GameScreen;
 
-
 public class JankenGame extends Game {
   public static final int SCREEN_SIZE_WIDTH = 800;
   public static final int SCREEN_SIZE_HEIGHT = 480;
-
-  private Screen nextScreen;
 
   @Override
   public void create () {
@@ -21,18 +18,13 @@ public class JankenGame extends Game {
 
   @Override
   public void render() {
-    if (nextScreen != null) {
-      super.setScreen(nextScreen);
-      nextScreen = null;
-    }
-
     super.render();
   }
 
   // screenの切り替え
   @Override
   public void setScreen(Screen screen) {
-    nextScreen = screen;
+    super.setScreen(screen);
   }
 
   @Override
