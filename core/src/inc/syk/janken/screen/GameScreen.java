@@ -15,7 +15,7 @@ import inc.syk.janken.JankenGame;
  * Created by sota on 16/06/03.
  */
 public class GameScreen implements Screen {
-  public static final String LOG_TAG = "GameScreenAdapter";
+  public static final String LOG_TAG = "GameScreen";
 
   OrthographicCamera camera;
 
