@@ -17,21 +17,22 @@ import inc.syk.janken.JankenGame;
 public class GameScreen implements Screen {
   public static final String LOG_TAG = "GameScreen";
 
-  OrthographicCamera camera;
+  private OrthographicCamera camera;
 
-  SpriteBatch batch;
+  private SpriteBatch batch;
 
-  Texture guTexture;
-  Texture tyokiTexture;
-  Texture paTexture;
-  Texture startButtanTexture;
+  private Texture guTexture;
+  private Texture tyokiTexture;
+  private Texture paTexture;
+  private Texture startButtanTexture;
 
-  Rectangle gu;
-  Rectangle tyoki;
-  Rectangle pa;
-  Rectangle startButton;
+  private Rectangle gu;
+  private Rectangle tyoki;
+  private Rectangle pa;
+  private Rectangle startButton;
 
-  JankenGame game ;
+  private JankenGame game ;
+
   public GameScreen(JankenGame game){
     this.game = game;
   }
