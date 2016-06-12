@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import inc.syk.janken.JankenGame;
 
@@ -33,6 +34,7 @@ public class TitleScreen implements Screen {
   private Rectangle startButton;
   private Texture misterYTexture;
   private Rectangle misterY;
+  private long Ytime;
 
   @Override
   public void show() {
@@ -70,10 +72,10 @@ public class TitleScreen implements Screen {
     batch.draw(startButtanTexture, startButton.x, startButton.y);
     batch.draw(misterYTexture, misterY.x, misterY.y);
 
-    try{
-    Thread.sleep(1000);
-    misterY.x = misterY.x + 1;
-    }catch(InterruptedException e){};
+    if(TimeUtils.millis() > Ytime){
+      misterY.x = misterY.x + 1;
+      Ytime = TimeUtils.millis();
+    };
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
