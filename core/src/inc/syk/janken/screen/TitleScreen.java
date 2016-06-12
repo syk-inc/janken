@@ -32,6 +32,7 @@ public class TitleScreen implements Screen {
   private Texture startButtanTexture;
   private Rectangle startButton;
   private Texture misterYTexture;
+  private Rectangle misterY;
 
   @Override
   public void show() {
@@ -52,6 +53,10 @@ public class TitleScreen implements Screen {
 
     // ミスターY
     misterYTexture = new Texture("misterY.png");
+    misterY        = new Rectangle();
+    misterY.x      = (JankenGame.SCREEN_SIZE_WIDTH) - 200;
+    misterY.y      = 1;
+
   }
 
   @Override
@@ -63,7 +68,12 @@ public class TitleScreen implements Screen {
     batch.begin();
 
     batch.draw(startButtanTexture, startButton.x, startButton.y);
-    batch.draw(misterYTexture, startButton.x, startButton.y);
+    batch.draw(misterYTexture, misterY.x, misterY.y);
+
+    try{
+    Thread.sleep(1000);
+    misterY.x = misterY.x + 1;
+    }catch(InterruptedException e){};
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
