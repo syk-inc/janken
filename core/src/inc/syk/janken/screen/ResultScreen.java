@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import inc.syk.janken.JankenGame;
+import inc.syk.janken.model.Result;
 
 /**
  * Created by sota on 16/06/03.
@@ -13,8 +14,17 @@ import inc.syk.janken.JankenGame;
 public class ResultScreen implements Screen {
   public static final String LOG_TAG = "ResultScreen";
 
+  private JankenGame game;
+  private Result result;
+
   private OrthographicCamera camera;
   private SpriteBatch batch;
+
+
+  public ResultScreen(JankenGame game, Result result){
+    this.game   = game;
+    this.result = result;
+  }
 
   @Override
   public void show() {
