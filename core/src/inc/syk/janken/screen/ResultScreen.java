@@ -59,7 +59,7 @@ public class ResultScreen implements Screen {
     RepeatAction forever = Actions.forever(seq);//無限ループさせる
 
     misterYImage.addAction(forever);
-
+    
    batch = stage.getBatch();
 
     font = new BitmapFont();
@@ -104,6 +104,7 @@ public class ResultScreen implements Screen {
 
   @Override
   public void dispose() {
-
+    stage.dispose();
+    font.dispose();
   }
 }
