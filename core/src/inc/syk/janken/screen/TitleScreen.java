@@ -3,12 +3,13 @@ package inc.syk.janken.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import inc.syk.janken.JankenGame;
 
@@ -28,37 +29,51 @@ public class TitleScreen implements Screen {
     this.game = game;
   }
 
-  private OrthographicCamera camera;
+
+  private Stage stage;
   private SpriteBatch batch;
-  private Texture startButtanTexture;
-  private Rectangle startButton;
-  private Texture misterYTexture;
-  private Rectangle misterY;
+
+
   private long Ytime;
+
 
   @Override
   public void show() {
     Gdx.app.log(LOG_TAG, "show");
 
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, JankenGame.SCREEN_SIZE_WIDTH, JankenGame.SCREEN_SIZE_HEIGHT);
+    // stage
+    stage = new Stage(new FillViewport(JankenGame.SCREEN_SIZE_WIDTH,JankenGame.SCREEN_SIZE_HEIGHT));
+    Gdx.input.setInputProcessor(stage);
 
+    // ばっち
     batch = new SpriteBatch();
 
     // スタートボタン
-    startButtanTexture = new Texture("start.png");
-    startButton        = new Rectangle();
-    startButton.x      = (JankenGame.SCREEN_SIZE_WIDTH / 2 )  - (startButtanTexture.getWidth() / 2);
-    startButton.y      = (JankenGame.SCREEN_SIZE_HEIGHT / 2 ) - (startButtanTexture.getHeight() /2);
-    startButton.width  = startButtanTexture.getWidth();
-    startButton.height = startButtanTexture.getHeight();
+    Texture startButtanTexture = new Texture("start.png");
+    Image startButtonImage = new Image(startButtanTexture);
+
+    int x = (JankenGame.SCREEN_SIZE_WIDTH / 2 )  - (startButtanTexture.getWidth() / 2);
+    int y = (JankenGame.SCREEN_SIZE_HEIGHT / 2 ) - (startButtanTexture.getHeight() /2);
+    startButtonImage.setPosition(x,y);
+
+    // スタートボタンクリック
+    startButtonImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        touchedStartButton();
+      }
+    });
+
 
     // ミスターY
-    misterYTexture = new Texture("misterY.png");
-    misterY        = new Rectangle();
-    misterY.x      = (JankenGame.SCREEN_SIZE_WIDTH) - 200;
-    misterY.y      = 1;
+    Texture misterYTexture = new Texture("misterY.png");
+    Image misterYImage = new Image(misterYTexture);
+    misterYImage.setPosition((JankenGame.SCREEN_SIZE_WIDTH) - 200,1);
 
+
+    // ステージに俳優を追加
+    stage.addActor(startButtonImage);
+    stage.addActor(misterYImage);
   }
 
   @Override
@@ -66,27 +81,14 @@ public class TitleScreen implements Screen {
     Gdx.gl.glClearColor(1, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    batch.setProjectionMatrix(camera.combined);
-    batch.begin();
+    stage.act(Gdx.graphics.getDeltaTime());
+    stage.draw();
 
-    batch.draw(startButtanTexture, startButton.x, startButton.y);
-    batch.draw(misterYTexture, misterY.x, misterY.y);
-
-    if(TimeUtils.millis() > Ytime){
+    /*if(TimeUtils.millis() > Ytime){
       misterY.x = misterY.x + 1;
       Ytime = TimeUtils.millis();
-    };
+    }*/
 
-    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    camera.unproject(tmp);
-
-    if (startButton.contains(tmp.x, tmp.y)) {
-      System.out.println("Is touched");
-      touchedStartButton();
-    }
-
-    camera.update();
-    batch.end();
   }
 
   /**
@@ -119,6 +121,6 @@ public class TitleScreen implements Screen {
 
   @Override
   public void dispose() {
-    startButtanTexture.dispose();
+
   }
 }
