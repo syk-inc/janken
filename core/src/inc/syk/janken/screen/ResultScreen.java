@@ -32,7 +32,6 @@ public class ResultScreen implements Screen {
   private Stage stage;
   private Batch batch;
 
-  private Texture misterY;
   private BitmapFont font;
 
   public ResultScreen(JankenGame game, Result result){
@@ -47,7 +46,7 @@ public class ResultScreen implements Screen {
     stage = new Stage(new FillViewport(JankenGame.SCREEN_SIZE_WIDTH,JankenGame.SCREEN_SIZE_HEIGHT));
     Gdx.input.setInputProcessor(stage);
 
-    misterY = new Texture("misterY.png");
+    Texture misterY = new Texture("misterY.png");
     Image misterYImage = new Image(misterY);
     misterYImage.setPosition(0,0);
 
