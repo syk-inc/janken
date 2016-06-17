@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import inc.syk.janken.JankenGame;
@@ -43,6 +45,7 @@ public class ResultScreen implements Screen {
     Gdx.app.log(LOG_TAG, "show");
 
     stage = new Stage(new FillViewport(JankenGame.SCREEN_SIZE_WIDTH,JankenGame.SCREEN_SIZE_HEIGHT));
+    Gdx.input.setInputProcessor(stage);
 
     misterY = new Texture("misterY.png");
     Image misterYImage = new Image(misterY);
@@ -59,13 +62,29 @@ public class ResultScreen implements Screen {
     RepeatAction forever = Actions.forever(seq);//無限ループさせる
 
     misterYImage.addAction(forever);
-    
-   batch = stage.getBatch();
+
+    misterYImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        clickedMisterY(x,y);
+      }
+    });
+
+    batch = stage.getBatch();
 
     font = new BitmapFont();
     font.getData().setScale(1.5f);
 
     stage.addActor(misterYImage);
+  }
+
+  /**
+   * misterYクリック
+   * @param x
+   * @param y
+   */
+  public void clickedMisterY(float x, float y){
+
   }
 
   @Override
