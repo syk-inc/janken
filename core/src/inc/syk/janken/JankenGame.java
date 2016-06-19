@@ -23,6 +23,11 @@ public class JankenGame extends Game {
   // screenの切り替え
   @Override
   public void setScreen(Screen screen) {
+    Screen currentScreen = getScreen();
+    if (currentScreen != null){
+      currentScreen.dispose();
+    }
+
     super.setScreen(screen);
   }
 
