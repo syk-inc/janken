@@ -68,14 +68,14 @@ public class ResultScreen implements Screen {
     batch = stage.getBatch();
 
     font = new BitmapFont();
-    
+    font.getData().setScale(3);
+
     Label.LabelStyle style = new Label.LabelStyle();
     style.font = font;
-    style.fontColor = new Color(1,1,1,1);
+    style.fontColor = new Color(0f,0f,0f,1);
 
     Label label = new Label("Back to Title", style);
-    label.scaleBy(5);
-    label.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-font.getSpaceWidth(), (JankenGame.SCREEN_SIZE_HEIGHT / 2)+50);
+    label.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-(label.getWidth()/2), (JankenGame.SCREEN_SIZE_HEIGHT / 2)+50);
 
     // クリック
     label.addListener(new ClickListener(){
