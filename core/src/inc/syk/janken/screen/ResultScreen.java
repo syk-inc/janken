@@ -49,7 +49,7 @@ public class ResultScreen implements Screen {
     Gdx.input.setInputProcessor(stage);
 
     Texture misterY = new Texture("misterY.png");
-    Image misterYImage = new Image(misterY);
+    final Image misterYImage = new Image(misterY);
     misterYImage.setPosition(0,0);
 
     Action toRight = Actions.moveBy(JankenGame.SCREEN_SIZE_WIDTH-misterYImage.getWidth(), 0, 1,Interpolation.fade);
@@ -88,22 +88,20 @@ public class ResultScreen implements Screen {
     misterYImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        clickedMisterY(x,y);
+        Action up = Actions.moveBy(0,120,0.3f,Interpolation.pow2);
+        Action down = Actions.moveBy(0,-120,0.5f,Interpolation.pow2);
+
+        SequenceAction jump = Actions.sequence();
+        jump.addAction(up);
+        jump.addAction(down);
+
+        misterYImage.addAction(jump);
       }
     });
 
 
     stage.addActor(misterYImage);
     stage.addActor(label);
-  }
-
-  /**x
-   * misterYクリック
-   * @param x
-   * @param y
-   */
-  public void clickedMisterY(float x, float y){
-
   }
 
   @Override
