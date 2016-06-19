@@ -74,11 +74,18 @@ public class ResultScreen implements Screen {
     style.font = font;
     style.fontColor = new Color(0f,0f,0f,1);
 
-    Label label = new Label("Back to Title", style);
-    label.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-(label.getWidth()/2), (JankenGame.SCREEN_SIZE_HEIGHT / 2)+50);
+    Label goToTitleLabel = new Label("Back to Title", style);
+    Label resultLabel = new Label("Result",style);
+    Label scoreLabel = new Label("Score: " + result.getScore(),style);
+
+    scoreLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-scoreLabel.getWidth()/2, (JankenGame.SCREEN_SIZE_HEIGHT / 2));
+    resultLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-resultLabel.getWidth() /2, (JankenGame.SCREEN_SIZE_HEIGHT / 2)+goToTitleLabel.getHeight());
+
+    goToTitleLabel.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-(goToTitleLabel.getWidth()/2), (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
+
 
     // クリック
-    label.addListener(new ClickListener(){
+    goToTitleLabel.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
         game.setScreen(new TitleScreen(game));
@@ -101,7 +108,9 @@ public class ResultScreen implements Screen {
 
 
     stage.addActor(misterYImage);
-    stage.addActor(label);
+    stage.addActor(goToTitleLabel);
+    stage.addActor(resultLabel);
+    stage.addActor(scoreLabel);
   }
 
   @Override
@@ -112,10 +121,6 @@ public class ResultScreen implements Screen {
     stage.act(Gdx.graphics.getDeltaTime());
     stage.draw();
 
-    batch.begin();
-    font.draw(batch, "Result", (JankenGame.SCREEN_SIZE_WIDTH / 2 )-font.getSpaceWidth(), (JankenGame.SCREEN_SIZE_HEIGHT / 2)+20);
-    font.draw(batch, "Score: " + result.getScore(),  (JankenGame.SCREEN_SIZE_WIDTH / 2 )-font.getSpaceWidth(), (JankenGame.SCREEN_SIZE_HEIGHT / 2));
-    batch.end();
   }
 
   @Override
