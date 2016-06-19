@@ -2,6 +2,7 @@ package inc.syk.janken.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
@@ -62,6 +64,27 @@ public class ResultScreen implements Screen {
 
     misterYImage.addAction(forever);
 
+
+    batch = stage.getBatch();
+
+    font = new BitmapFont();
+    
+    Label.LabelStyle style = new Label.LabelStyle();
+    style.font = font;
+    style.fontColor = new Color(1,1,1,1);
+
+    Label label = new Label("Back to Title", style);
+    label.scaleBy(5);
+    label.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-font.getSpaceWidth(), (JankenGame.SCREEN_SIZE_HEIGHT / 2)+50);
+
+    // クリック
+    label.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.setScreen(new TitleScreen(game));
+      }
+    });
+
     misterYImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -69,15 +92,12 @@ public class ResultScreen implements Screen {
       }
     });
 
-    batch = stage.getBatch();
-
-    font = new BitmapFont();
-    font.getData().setScale(1.5f);
 
     stage.addActor(misterYImage);
+    stage.addActor(label);
   }
 
-  /**
+  /**x
    * misterYクリック
    * @param x
    * @param y
