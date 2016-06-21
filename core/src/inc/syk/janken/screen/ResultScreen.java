@@ -75,16 +75,18 @@ public class ResultScreen implements Screen {
     style.fontColor = new Color(0f,0f,0f,1);
 
     Label goToTitleLabel = new Label("Back to Title", style);
+    Label replayLabel = new Label("Replay?",style);
     Label resultLabel = new Label("Result",style);
     Label scoreLabel = new Label("Score: " + result.getScore(),style);
 
     scoreLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-scoreLabel.getWidth()/2, (JankenGame.SCREEN_SIZE_HEIGHT / 2));
     resultLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-resultLabel.getWidth() /2, (JankenGame.SCREEN_SIZE_HEIGHT / 2)+goToTitleLabel.getHeight());
 
-    goToTitleLabel.setPosition( (JankenGame.SCREEN_SIZE_WIDTH / 2 )-(goToTitleLabel.getWidth()/2), (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
+    goToTitleLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 ) - goToTitleLabel.getWidth() - 30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
+    replayLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )+30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
 
 
-    // クリック
+    // タイトルに戻るクリック
     goToTitleLabel.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -92,6 +94,15 @@ public class ResultScreen implements Screen {
       }
     });
 
+    // リプレイクリック
+    replayLabel.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.setScreen(new GameScreen(game));
+      }
+    });
+
+    // misterYクリック
     misterYImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -109,6 +120,7 @@ public class ResultScreen implements Screen {
 
     stage.addActor(misterYImage);
     stage.addActor(goToTitleLabel);
+    stage.addActor(replayLabel);
     stage.addActor(resultLabel);
     stage.addActor(scoreLabel);
   }
