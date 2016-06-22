@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -32,7 +31,6 @@ public class ResultScreen implements Screen {
   private Result result;
 
   private Stage stage;
-  private Batch batch;
 
   private BitmapFont font;
 
@@ -63,9 +61,6 @@ public class ResultScreen implements Screen {
     RepeatAction forever = Actions.forever(seq);//無限ループさせる
 
     misterYImage.addAction(forever);
-
-
-    batch = stage.getBatch();
 
     font = new BitmapFont();
     font.getData().setScale(3);
