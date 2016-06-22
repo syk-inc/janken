@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -34,9 +33,9 @@ public class GameScreen implements Screen {
   private Rectangle tyoki;
   private Rectangle pa;
 
-  private long enemyhand;
-  private long myhand;
-  private long kekka;
+  private long enemyHand;
+  private long myHand;
+  private long result;
 
   private JankenGame game ;
 
@@ -86,9 +85,9 @@ public class GameScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     /*敵の手をランダムで出す*/
-    enemyhand = TimeUtils.millis() % 3;
+    enemyHand = TimeUtils.millis() % 3;
     /*
-    System.out.println(enemyhand);
+    System.out.println(enemyHand);
     +/
 
     /*タッチした場所による条件分け*/
@@ -97,20 +96,20 @@ public class GameScreen implements Screen {
 
     if (gu.contains(tmp.x, tmp.y)) {
       System.out.println("Is touched gu");
-      myhand = 0;
-      touchedgu();
+      myHand = 0;
+      touchedGu();
     }
 
     if (tyoki.contains(tmp.x, tmp.y)) {
       System.out.println("Is touched tyoki");
-      myhand = 1;
-      touchedtyoki();
+      myHand = 1;
+      touchedTyoki();
     }
 
     if (pa.contains(tmp.x, tmp.y)) {
       System.out.println("Is touched pa");
-      myhand = 2;
-      touchedpa();
+      myHand = 2;
+      touchedPa();
     }
 
     /*batchでの画像表示はrenderの最後に行う*/
@@ -130,55 +129,55 @@ public class GameScreen implements Screen {
 
   /*グーチョキパーの条件付け
   *グー　0　チョキ　1　パー　2
-  * kekka kati 0 hikiwake 1 make 2
+  * result kati 0 hikiwake 1 make 2
   */
-  private void touchedgu() {
+  private void touchedGu() {
     Gdx.gl.glClearColor(1, 0, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyhand == 0){
-      kekka = 1;
+    if(enemyHand == 0){
+      result = 1;
       System.out.println("ひきわけ");
     }
-    if(enemyhand == 1){
-      kekka = 0;
+    if(enemyHand == 1){
+      result = 0;
       System.out.println("かち");
     }
-    if(enemyhand == 2){
-      kekka = 2;
+    if(enemyHand == 2){
+      result = 2;
       System.out.println("まけ");
     }
   }
 
-  private void touchedtyoki() {
+  private void touchedTyoki() {
     Gdx.gl.glClearColor(1, 1, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyhand == 0){
-      kekka = 2;
+    if(enemyHand == 0){
+      result = 2;
       System.out.println("まけ");
     }
-    if(enemyhand == 1){
-      kekka = 1;
+    if(enemyHand == 1){
+      result = 1;
       System.out.println("ひきわけ");
     }
-    if(enemyhand == 2){
-      kekka = 0;
+    if(enemyHand == 2){
+      result = 0;
       System.out.println("かち");
     }
   }
 
-  private void touchedpa() {
+  private void touchedPa() {
     Gdx.gl.glClearColor(0, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyhand == 0){
-      kekka = 0;
+    if(enemyHand == 0){
+      result = 0;
       System.out.println("かち");
     }
-    if(enemyhand == 1){
-      kekka = 2;
+    if(enemyHand == 1){
+      result = 2;
       System.out.println("まけ");
     }
-    if(enemyhand == 2){
-      kekka = 1;
+    if(enemyHand == 2){
+      result = 1;
       System.out.println("ひきわけ");
     }
   }
