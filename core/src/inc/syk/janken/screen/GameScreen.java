@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.PixmapPacker;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
@@ -28,13 +31,13 @@ public class GameScreen implements Screen {
 
   private JankenGame game;
   private Result result;
-
   public GameScreen(JankenGame game){
         this.game = game;
     }
-
   private Stage stage;
   private long enemyHand;
+  private BitmapFont font;
+  private Image misterY;
 
   @Override
   public void show() {
@@ -46,6 +49,14 @@ public class GameScreen implements Screen {
 
     result = new Result();
 
+    // ミスターY
+    Texture misterYTexture = new Texture("gu-cyokipa-.png");
+    final Texture misterYguTexture = new Texture("misterY_gu-.png");
+    final Texture misterYcyokiTexture = new Texture("misterY_cyoki.png");
+    final Texture misterYpaTexture = new Texture("misterY_pa-.png");
+    misterY = new Image(misterYTexture);
+    misterY.setPosition(300,200);
+
      // guu
     Texture guTexture = new Texture("guu.png");
     Image guImage = new Image(guTexture);
@@ -54,6 +65,16 @@ public class GameScreen implements Screen {
     guImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
+        enemyHand = TimeUtils.millis() % 3;
+        if(enemyHand == 0){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
+        }
+        if(enemyHand == 1){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
+        }
+        if(enemyHand == 2){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
+        }
         touchedGu();
       }
     });
@@ -66,6 +87,16 @@ public class GameScreen implements Screen {
     tyokiImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
+        enemyHand = TimeUtils.millis() % 3;
+        if(enemyHand == 0){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
+        }
+        if(enemyHand == 1){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
+        }
+        if(enemyHand == 2){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
+        }
         touchedTyoki();
       }
     });
@@ -78,6 +109,16 @@ public class GameScreen implements Screen {
     paImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
+        enemyHand = TimeUtils.millis() % 3;
+        if(enemyHand == 0){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
+        }
+        if(enemyHand == 1){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
+        }
+        if(enemyHand == 2){
+          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
+        }
         touchedPa();
       }
     });
@@ -96,40 +137,54 @@ public class GameScreen implements Screen {
       }
       });
 
-    // ミスターY
-    Texture misterYTexture = new Texture("misterY.png");
-    Image misterYImage = new Image(misterYTexture);
-    misterYImage.setPosition(300,200);
+    // miniY 1
+    Texture miniY1Texture = new Texture("miniY_bule.png");
+    Image miniY1Image = new Image(miniY1Texture);
+    int a = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2);
+    int b = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
+    miniY1Image.setPosition(a,b);
+
+    // miniY 2
+    Texture miniY2Texture = new Texture("miniY_Purple.png");
+    Image miniY2Image = new Image(miniY2Texture);
+    int c = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 20;
+    int d = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
+    miniY2Image.setPosition(c,d);
+
+    // miniY 3
+    Texture miniY3Texture = new Texture("miniY_red.png");
+    Image miniY3Image = new Image(miniY3Texture);
+    int e = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 40;
+    int f = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
+    miniY3Image.setPosition(e,f);
 
     stage.addActor(startButtonImage);
     stage.addActor(guImage);
     stage.addActor(tyokiImage);
     stage.addActor(paImage);
-    stage.addActor(misterYImage);
-  }
+    stage.addActor(misterY);
+    stage.addActor(miniY1Image);
+    stage.addActor(miniY2Image);
+    stage.addActor(miniY3Image);
+    }
 
   @Override
   public void render(float delta) {
     //Gdx.app.log(LOG_TAG, "render");
     //Gdx.gl.glClearColor(1, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    /*敵の手をランダムで出す*/
-    enemyHand = TimeUtils.millis() % 3;
-    //System.out.println(enemyHand);
-
     stage.act(Gdx.graphics.getDeltaTime());
     stage.draw();
-
   }
 
   /*グーチョキパーの条件付け
   *グー　0　チョキ　1　パー　2
-  * result kati 0 hikiwake 1 make 2
   */
+
   private void touchedGu() {
     Gdx.gl.glClearColor(1, 0, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
     if(enemyHand == 0){
       result.draw();
       System.out.println("ひきわけ");
@@ -142,6 +197,10 @@ public class GameScreen implements Screen {
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
+      if (result.getLoseCount() >= 5){
+        game.setScreen(new ResultScreen(game, result));
+        this.dispose();
+      }
     }
   }
 
@@ -152,6 +211,10 @@ public class GameScreen implements Screen {
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
+      if (result.getLoseCount() >= 5){
+        game.setScreen(new ResultScreen(game, result));
+        this.dispose();
+      }
     }
     if(enemyHand == 1){
       result.draw();
@@ -174,6 +237,10 @@ public class GameScreen implements Screen {
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
+      if (result.getLoseCount() >= 5){
+        game.setScreen(new ResultScreen(game, result));
+        this.dispose();
+      }
     }
     if(enemyHand == 2){
       result.draw();
