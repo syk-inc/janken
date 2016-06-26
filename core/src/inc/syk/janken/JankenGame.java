@@ -3,7 +3,9 @@ package inc.syk.janken;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
+import inc.syk.janken.model.Result;
 import inc.syk.janken.screen.TitleScreen;
+import inc.syk.janken.screen.ResultScreen;
 
 public class JankenGame extends Game {
   public static final int SCREEN_SIZE_WIDTH = 800;
@@ -12,7 +14,8 @@ public class JankenGame extends Game {
   @Override
   public void create () {
     // アプリが起動して最初に表示されるScreen
-    setScreen(new TitleScreen(this));
+    //setScreen(new TitleScreen(this));
+    setScreen(new ResultScreen(this,new Result()));
   }
 
   @Override
