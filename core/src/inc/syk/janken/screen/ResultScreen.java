@@ -82,7 +82,7 @@ public class ResultScreen implements Screen {
 
     int winX =  (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) / 2 ) - winCountLabel.getWidth() / 2);
     int drawX = (int) (JankenGame.SCREEN_SIZE_WIDTH / 2 - drawCountLabel.getWidth()/2);
-    int loseX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 2 - drawCountLabel.getWidth()/2)) + (loseCountLabel.getWidth() + 30));
+    int loseX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 2 - drawCountLabel.getWidth()/2)) + (loseCountLabel.getWidth() + 100));
 
     winCountLabel.setPosition(winX, 255);
     drawCountLabel.setPosition(drawX, 255);
