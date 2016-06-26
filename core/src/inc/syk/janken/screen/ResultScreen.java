@@ -80,9 +80,9 @@ public class ResultScreen implements Screen {
     resultLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-resultLabel.getWidth() /2, 405);
     scoreLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-scoreLabel.getWidth()/2, 355);
 
-    int winX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) / 2 ) - winCountLabel.getWidth() / 2);
-    int drawX = (int) (JankenGame.SCREEN_SIZE_WIDTH/2-drawCountLabel.getWidth()/2);
-    int loseX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) * 2 ) + loseCountLabel.getWidth() / 2);
+    int winX =  (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) / 2 ) - winCountLabel.getWidth() / 2);
+    int drawX = (int) (JankenGame.SCREEN_SIZE_WIDTH / 2 - drawCountLabel.getWidth()/2);
+    int loseX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 2 - drawCountLabel.getWidth()/2)) + (loseCountLabel.getWidth() + 30));
 
     winCountLabel.setPosition(winX, 255);
     drawCountLabel.setPosition(drawX, 255);
@@ -90,7 +90,7 @@ public class ResultScreen implements Screen {
 
     goToTitleLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 ) - goToTitleLabel.getWidth() - 30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
     replayLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )+30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
-
+    // viewの位置ってもっと簡単に指定できないの？androidのlayoutファイルみたいなのないんですか？
 
     // タイトルに戻るクリック
     goToTitleLabel.addListener(new ClickListener(){
