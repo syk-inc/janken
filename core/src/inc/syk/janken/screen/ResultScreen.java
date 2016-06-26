@@ -73,9 +73,20 @@ public class ResultScreen implements Screen {
     Label replayLabel = new Label("Replay?",style);
     Label resultLabel = new Label("Result",style);
     Label scoreLabel = new Label("Score: " + result.getScore(),style);
+    Label winCountLabel = new Label("WIN: " + result.getWinCount(),style);
+    Label drawCountLabel = new Label("DRAW: " + result.getDrawCount(),style);
+    Label loseCountLabel = new Label("LOSE: " + result.getLoseCount(),style);
 
-    scoreLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-scoreLabel.getWidth()/2, (JankenGame.SCREEN_SIZE_HEIGHT / 2));
-    resultLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-resultLabel.getWidth() /2, (JankenGame.SCREEN_SIZE_HEIGHT / 2)+goToTitleLabel.getHeight());
+    resultLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-resultLabel.getWidth() /2, 405);
+    scoreLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )-scoreLabel.getWidth()/2, 355);
+
+    int winX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) / 2 ) - winCountLabel.getWidth() / 2);
+    int drawX = (int) (JankenGame.SCREEN_SIZE_WIDTH/2-drawCountLabel.getWidth()/2);
+    int loseX = (int) (((JankenGame.SCREEN_SIZE_WIDTH / 3) * 2 ) + loseCountLabel.getWidth() / 2);
+
+    winCountLabel.setPosition(winX, 255);
+    drawCountLabel.setPosition(drawX, 255);
+    loseCountLabel.setPosition(loseX, 255);
 
     goToTitleLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 ) - goToTitleLabel.getWidth() - 30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
     replayLabel.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2 )+30, (JankenGame.SCREEN_SIZE_HEIGHT / 2) - goToTitleLabel.getHeight()*2);
@@ -118,6 +129,9 @@ public class ResultScreen implements Screen {
     stage.addActor(replayLabel);
     stage.addActor(resultLabel);
     stage.addActor(scoreLabel);
+    stage.addActor(winCountLabel);
+    stage.addActor(drawCountLabel);
+    stage.addActor(loseCountLabel);
   }
 
   @Override
