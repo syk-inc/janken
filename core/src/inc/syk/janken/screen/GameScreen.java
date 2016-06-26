@@ -57,6 +57,27 @@ public class GameScreen implements Screen {
     misterY = new Image(misterYTexture);
     misterY.setPosition(300,200);
 
+    // miniY 1
+    Texture miniY1Texture = new Texture("miniY_bule.png");
+    final Image miniY1Image = new Image(miniY1Texture);
+    int a = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2);
+    int b = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() / 2);
+    miniY1Image.setPosition(a,b);
+
+    // miniY 2
+    Texture miniY2Texture = new Texture("miniY_Purple.png");
+    final Image miniY2Image = new Image(miniY2Texture);
+    int c = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 20;
+    int d = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
+    miniY2Image.setPosition(c,d);
+
+    // miniY 3
+    Texture miniY3Texture = new Texture("miniY_red.png");
+    final Image miniY3Image = new Image(miniY3Texture);
+    int e = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 40;
+    int f = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() / 2);
+    miniY3Image.setPosition(e,f);
+
      // guu
     Texture guTexture = new Texture("guu.png");
     Image guImage = new Image(guTexture);
@@ -76,6 +97,12 @@ public class GameScreen implements Screen {
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedGu();
+        if (result.getLoseCount() == 1){
+          miniY3Image.remove();
+        }
+        if (result.getLoseCount() == 3){
+          miniY2Image.remove();
+        }
       }
     });
 
@@ -98,6 +125,12 @@ public class GameScreen implements Screen {
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedTyoki();
+        if (result.getLoseCount() == 1){
+          miniY3Image.remove();
+        }
+        if (result.getLoseCount() == 3){
+          miniY2Image.remove();
+        }
       }
     });
 
@@ -120,6 +153,12 @@ public class GameScreen implements Screen {
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedPa();
+        if (result.getLoseCount() == 1){
+          miniY3Image.remove();
+        }
+        if (result.getLoseCount() == 3){
+          miniY2Image.remove();
+        }
       }
     });
 
@@ -127,7 +166,7 @@ public class GameScreen implements Screen {
     Texture startButtanTexture = new Texture("start.png");
     Image startButtonImage = new Image(startButtanTexture);
     int x = (JankenGame.SCREEN_SIZE_WIDTH / 6 )  - (startButtanTexture.getWidth() / 2);
-    int y = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (startButtanTexture.getHeight() /2);
+    int y = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (startButtanTexture.getHeight() / 2);
     startButtonImage.setPosition(x,y);
      // スタートボタンクリック
       startButtonImage.addListener(new ClickListener(){
@@ -136,27 +175,6 @@ public class GameScreen implements Screen {
          touchedStartButton();
       }
       });
-
-    // miniY 1
-    Texture miniY1Texture = new Texture("miniY_bule.png");
-    Image miniY1Image = new Image(miniY1Texture);
-    int a = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2);
-    int b = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
-    miniY1Image.setPosition(a,b);
-
-    // miniY 2
-    Texture miniY2Texture = new Texture("miniY_Purple.png");
-    Image miniY2Image = new Image(miniY2Texture);
-    int c = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 20;
-    int d = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
-    miniY2Image.setPosition(c,d);
-
-    // miniY 3
-    Texture miniY3Texture = new Texture("miniY_red.png");
-    Image miniY3Image = new Image(miniY3Texture);
-    int e = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 40;
-    int f = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
-    miniY3Image.setPosition(e,f);
 
     stage.addActor(startButtonImage);
     stage.addActor(guImage);
