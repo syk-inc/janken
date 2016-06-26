@@ -111,7 +111,7 @@ public class GameScreen implements Screen {
   @Override
   public void render(float delta) {
     //Gdx.app.log(LOG_TAG, "render");
-    Gdx.gl.glClearColor(1, 1, 1, 1);
+    //Gdx.gl.glClearColor(1, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     /*敵の手をランダムで出す*/
@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
   * result kati 0 hikiwake 1 make 2
   */
   private void touchedGu() {
-    Gdx.gl.glClearColor(1, 1, 1, 1);
+    Gdx.gl.glClearColor(1, 0, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     if(enemyHand == 0){
       result.draw();
@@ -140,6 +140,7 @@ public class GameScreen implements Screen {
     }
     if(enemyHand == 2){
       result.lose();
+      System.out.println(result.getLoseCount());
       System.out.println("まけ");
     }
   }
@@ -149,6 +150,7 @@ public class GameScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     if(enemyHand == 0){
       result.lose();
+      System.out.println(result.getLoseCount());
       System.out.println("まけ");
     }
     if(enemyHand == 1){
@@ -170,6 +172,7 @@ public class GameScreen implements Screen {
     }
     if(enemyHand == 1){
       result.lose();
+      System.out.println(result.getLoseCount());
       System.out.println("まけ");
     }
     if(enemyHand == 2){
