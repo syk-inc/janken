@@ -10,9 +10,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import inc.syk.janken.JankenGame;
+import inc.syk.janken.model.Result;
 
 /**
  * Created by sota on 16/06/03.
@@ -20,111 +26,101 @@ import inc.syk.janken.JankenGame;
 public class GameScreen implements Screen {
   public static final String LOG_TAG = "GameScreen";
 
-  private OrthographicCamera camera;
-
-  private SpriteBatch batch;
-  private BitmapFont font;
-
-  private Texture guTexture;
-  private Texture tyokiTexture;
-  private Texture paTexture;
-
-  private Rectangle gu;
-  private Rectangle tyoki;
-  private Rectangle pa;
-
-  private long enemyHand;
-  private long myHand;
-  private long result;
-
-  private JankenGame game ;
+  private JankenGame game;
+  private Result result;
 
   public GameScreen(JankenGame game){
-    this.game = game;
-  }
+        this.game = game;
+    }
+
+  private Stage stage;
+  private long enemyHand;
 
   @Override
   public void show() {
     Gdx.app.log(LOG_TAG, "show");
 
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, JankenGame.SCREEN_SIZE_WIDTH, JankenGame.SCREEN_SIZE_HEIGHT); //画面サイズ
+    // stage
+    stage = new Stage(new FillViewport(JankenGame.SCREEN_SIZE_WIDTH,JankenGame.SCREEN_SIZE_HEIGHT));
+    Gdx.input.setInputProcessor(stage);
 
-    batch = new SpriteBatch();
-    font = new BitmapFont();
-    font.setColor(Color.RED);
+    result = new Result();
 
-    guTexture = new Texture("guu.png");
-    tyokiTexture = new Texture("tyoki.png");
-    paTexture = new Texture("paa.png");
+     // guu
+    Texture guTexture = new Texture("guu.png");
+    Image guImage = new Image(guTexture);
+    guImage.setPosition(20,20);
+    // guクリック
+    guImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        touchedGu();
+      }
+    });
 
-    gu = new Rectangle();
-    gu.x = 20;
-    gu.y = 20;
-    gu.width = guTexture.getWidth();
-    gu.height = guTexture.getHeight();
+    // tyoki
+    Texture tyokiTexture = new Texture("tyoki.png");
+    Image tyokiImage = new Image(tyokiTexture);
+    tyokiImage.setPosition((JankenGame.SCREEN_SIZE_WIDTH / 2) - (tyokiTexture.getWidth() / 2),20);
+    // tyokiクリック
+    tyokiImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        touchedTyoki();
+      }
+    });
 
-    tyoki = new Rectangle();
-    tyoki.x = (JankenGame.SCREEN_SIZE_WIDTH / 2) - (tyokiTexture.getWidth() / 2);
-    tyoki.y = 20;
-    tyoki.width = tyokiTexture.getWidth();
-    tyoki.height = tyokiTexture.getHeight();
+    // paa
+    Texture paTexture = new Texture("paa.png");
+    Image paImage = new Image(paTexture);
+    paImage.setPosition(JankenGame.SCREEN_SIZE_WIDTH  - paTexture.getWidth() - 20,20);
+    // paクリック
+    paImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        touchedPa();
+      }
+    });
 
-    pa = new Rectangle();
-    pa.x = JankenGame.SCREEN_SIZE_WIDTH - paTexture.getWidth() - 20;
-    pa.y = 20;
-    pa.width = paTexture.getWidth();
-    pa.height = paTexture.getHeight();
+    // スタートボタン
+    Texture startButtanTexture = new Texture("start.png");
+    Image startButtonImage = new Image(startButtanTexture);
+    int x = (JankenGame.SCREEN_SIZE_WIDTH / 6 )  - (startButtanTexture.getWidth() / 2);
+    int y = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (startButtanTexture.getHeight() /2);
+    startButtonImage.setPosition(x,y);
+     // スタートボタンクリック
+      startButtonImage.addListener(new ClickListener(){
+          @Override
+          public void clicked(InputEvent event, float x, float y) {
+         touchedStartButton();
+      }
+      });
 
+    // ミスターY
+    Texture misterYTexture = new Texture("misterY.png");
+    Image misterYImage = new Image(misterYTexture);
+    misterYImage.setPosition(300,200);
+
+    stage.addActor(startButtonImage);
+    stage.addActor(guImage);
+    stage.addActor(tyokiImage);
+    stage.addActor(paImage);
+    stage.addActor(misterYImage);
   }
 
   @Override
   public void render(float delta) {
-    Gdx.app.log(LOG_TAG, "render");
+    //Gdx.app.log(LOG_TAG, "render");
     Gdx.gl.glClearColor(1, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     /*敵の手をランダムで出す*/
     enemyHand = TimeUtils.millis() % 3;
-    /*
-    System.out.println(enemyHand);
-    +/
+    //System.out.println(enemyHand);
 
-    /*タッチした場所による条件分け*/
-    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    camera.unproject(tmp);
+    stage.act(Gdx.graphics.getDeltaTime());
+    stage.draw();
 
-    if (gu.contains(tmp.x, tmp.y)) {
-      System.out.println("Is touched gu");
-      myHand = 0;
-      touchedGu();
-    }
-
-    if (tyoki.contains(tmp.x, tmp.y)) {
-      System.out.println("Is touched tyoki");
-      myHand = 1;
-      touchedTyoki();
-    }
-
-    if (pa.contains(tmp.x, tmp.y)) {
-      System.out.println("Is touched pa");
-      myHand = 2;
-      touchedPa();
-    }
-
-    /*batchでの画像表示はrenderの最後に行う*/
-    batch.setProjectionMatrix(camera.combined);
-    batch.begin();
-
-    batch.draw(guTexture, gu.x, gu.y);
-    batch.draw(tyokiTexture,tyoki.x , tyoki.y);
-    batch.draw(paTexture, pa.x, pa.y);
-
-    /*　結果を表示する
-    font.draw(batch, "Hello World", 200, 200);
-    */
-    camera.update();
-    batch.end();
   }
 
   /*グーチョキパーの条件付け
@@ -132,18 +128,18 @@ public class GameScreen implements Screen {
   * result kati 0 hikiwake 1 make 2
   */
   private void touchedGu() {
-    Gdx.gl.glClearColor(1, 0, 1, 1);
+    Gdx.gl.glClearColor(1, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     if(enemyHand == 0){
-      result = 1;
+      result.draw();
       System.out.println("ひきわけ");
     }
     if(enemyHand == 1){
-      result = 0;
+      result.win();
       System.out.println("かち");
     }
     if(enemyHand == 2){
-      result = 2;
+      result.lose();
       System.out.println("まけ");
     }
   }
@@ -152,15 +148,15 @@ public class GameScreen implements Screen {
     Gdx.gl.glClearColor(1, 1, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     if(enemyHand == 0){
-      result = 2;
+      result.lose();
       System.out.println("まけ");
     }
     if(enemyHand == 1){
-      result = 1;
+      result.draw();
       System.out.println("ひきわけ");
     }
     if(enemyHand == 2){
-      result = 0;
+      result.win();
       System.out.println("かち");
     }
   }
@@ -169,20 +165,24 @@ public class GameScreen implements Screen {
     Gdx.gl.glClearColor(0, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     if(enemyHand == 0){
-      result = 0;
+      result.win();
       System.out.println("かち");
     }
     if(enemyHand == 1){
-      result = 2;
+      result.lose();
       System.out.println("まけ");
     }
     if(enemyHand == 2){
-      result = 1;
+      result.draw();
       System.out.println("ひきわけ");
     }
   }
-
   /*条件付けここまで*/
+
+  private void touchedStartButton() {
+    game.setScreen(new ResultScreen(game, result));
+    this.dispose();
+  }
 
   @Override
   public void resize(int width, int height) {
@@ -206,6 +206,5 @@ public class GameScreen implements Screen {
 
   @Override
   public void dispose() {
-
   }
 }
