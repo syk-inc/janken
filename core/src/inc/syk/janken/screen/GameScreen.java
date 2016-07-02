@@ -2,16 +2,10 @@ package inc.syk.janken.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -31,13 +25,30 @@ public class GameScreen implements Screen {
 
   private JankenGame game;
   private Result result;
-  public GameScreen(JankenGame game){
-        this.game = game;
-    }
   private Stage stage;
   private long enemyHand;
   private BitmapFont font;
   private Image misterY;
+
+  private enum Hands{
+    GU(0),
+    TYOKI(1),
+    PA(2);
+    private final int id;
+
+    Hands(final int id){
+      this.id = id;
+    }
+
+    public int getId() {
+      return id;
+    }
+  }
+
+
+  public GameScreen(JankenGame game){
+    this.game = game;
+  }
 
   @Override
   public void show() {
@@ -78,7 +89,7 @@ public class GameScreen implements Screen {
     int f = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() / 2);
     miniY3Image.setPosition(e,f);
 
-     // guu
+    // guu
     Texture guTexture = new Texture("guu.png");
     Image guImage = new Image(guTexture);
     guImage.setPosition(20,20);
@@ -87,13 +98,13 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == 0){
+        if(enemyHand == Hands.GU.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
         }
-        if(enemyHand == 1){
+        if(enemyHand == Hands.TYOKI.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
         }
-        if(enemyHand == 2){
+        if(enemyHand == Hands.PA.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedGu();
@@ -115,13 +126,13 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == 0){
+        if(enemyHand == Hands.GU.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
         }
-        if(enemyHand == 1){
+        if(enemyHand == Hands.TYOKI.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
         }
-        if(enemyHand == 2){
+        if(enemyHand == Hands.PA.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedTyoki();
@@ -143,13 +154,13 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == 0){
+        if(enemyHand == Hands.GU.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
         }
-        if(enemyHand == 1){
+        if(enemyHand == Hands.TYOKI.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
         }
-        if(enemyHand == 2){
+        if(enemyHand == Hands.PA.getId()){
           misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
         }
         touchedPa();
@@ -168,13 +179,13 @@ public class GameScreen implements Screen {
     int x = (JankenGame.SCREEN_SIZE_WIDTH / 6 )  - (startButtanTexture.getWidth() / 2);
     int y = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (startButtanTexture.getHeight() / 2);
     startButtonImage.setPosition(x,y);
-     // スタートボタンクリック
-      startButtonImage.addListener(new ClickListener(){
-          @Override
-          public void clicked(InputEvent event, float x, float y) {
-         touchedStartButton();
+    // スタートボタンクリック
+    startButtonImage.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        touchedStartButton();
       }
-      });
+    });
 
     stage.addActor(startButtonImage);
     stage.addActor(guImage);
@@ -184,7 +195,7 @@ public class GameScreen implements Screen {
     stage.addActor(miniY1Image);
     stage.addActor(miniY2Image);
     stage.addActor(miniY3Image);
-    }
+  }
 
   @Override
   public void render(float delta) {
@@ -203,15 +214,15 @@ public class GameScreen implements Screen {
     Gdx.gl.glClearColor(1, 0, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    if(enemyHand == 0){
+    if(enemyHand == Hands.GU.getId()){
       result.draw();
       System.out.println("ひきわけ");
     }
-    if(enemyHand == 1){
+    if(enemyHand == Hands.TYOKI.getId()){
       result.win();
       System.out.println("かち");
     }
-    if(enemyHand == 2){
+    if(enemyHand == Hands.PA.getId()){
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
@@ -225,7 +236,7 @@ public class GameScreen implements Screen {
   private void touchedTyoki() {
     Gdx.gl.glClearColor(1, 1, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyHand == 0){
+    if(enemyHand == Hands.GU.getId()){
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
@@ -234,11 +245,11 @@ public class GameScreen implements Screen {
         this.dispose();
       }
     }
-    if(enemyHand == 1){
+    if(enemyHand == Hands.TYOKI.getId()){
       result.draw();
       System.out.println("ひきわけ");
     }
-    if(enemyHand == 2){
+    if((enemyHand == Hands.PA.getId())){
       result.win();
       System.out.println("かち");
     }
@@ -247,11 +258,11 @@ public class GameScreen implements Screen {
   private void touchedPa() {
     Gdx.gl.glClearColor(0, 1, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyHand == 0){
+    if(enemyHand == Hands.GU.getId()){
       result.win();
       System.out.println("かち");
     }
-    if(enemyHand == 1){
+    if(enemyHand == Hands.TYOKI.getId()){
       result.lose();
       System.out.println(result.getLoseCount());
       System.out.println("まけ");
@@ -260,7 +271,7 @@ public class GameScreen implements Screen {
         this.dispose();
       }
     }
-    if(enemyHand == 2){
+    if(enemyHand == Hands.PA.getId()){
       result.draw();
       System.out.println("ひきわけ");
     }
