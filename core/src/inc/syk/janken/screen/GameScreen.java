@@ -29,6 +29,12 @@ public class GameScreen implements Screen {
   private long enemyHand;
   private BitmapFont font;
   private Image misterY;
+  private Texture misterYguTexture;
+  private Texture misterYcyokiTexture;
+  private Texture misterYpaTexture;
+  private Image miniY2Image;
+  private Image miniY3Image;
+
 
   private enum Hands{
     GU(0),
@@ -62,9 +68,9 @@ public class GameScreen implements Screen {
 
     // ミスターY
     Texture misterYTexture = new Texture("gu-cyokipa-.png");
-    final Texture misterYguTexture = new Texture("misterY_gu-.png");
-    final Texture misterYcyokiTexture = new Texture("misterY_cyoki.png");
-    final Texture misterYpaTexture = new Texture("misterY_pa-.png");
+    misterYguTexture = new Texture("misterY_gu-.png");
+    misterYcyokiTexture = new Texture("misterY_cyoki.png");
+    misterYpaTexture = new Texture("misterY_pa-.png");
     misterY = new Image(misterYTexture);
     misterY.setPosition(300,200);
 
@@ -77,14 +83,14 @@ public class GameScreen implements Screen {
 
     // miniY 2
     Texture miniY2Texture = new Texture("miniY_Purple.png");
-    final Image miniY2Image = new Image(miniY2Texture);
+    miniY2Image = new Image(miniY2Texture);
     int c = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 20;
     int d = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() /2);
     miniY2Image.setPosition(c,d);
 
     // miniY 3
     Texture miniY3Texture = new Texture("miniY_red.png");
-    final Image miniY3Image = new Image(miniY3Texture);
+    miniY3Image = new Image(miniY3Texture);
     int e = (JankenGame.SCREEN_SIZE_WIDTH / 4 * 3 )  - (miniY1Texture.getWidth() / 2) + 40;
     int f = (JankenGame.SCREEN_SIZE_HEIGHT / 4 * 3 ) - (miniY1Texture.getHeight() / 2);
     miniY3Image.setPosition(e,f);
@@ -97,23 +103,8 @@ public class GameScreen implements Screen {
     guImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == Hands.GU.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
-        }
-        if(enemyHand == Hands.TYOKI.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
-        }
-        if(enemyHand == Hands.PA.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
-        }
+        drawEnemy();
         touchedGu();
-        if (result.getLoseCount() == 1){
-          miniY3Image.remove();
-        }
-        if (result.getLoseCount() == 3){
-          miniY2Image.remove();
-        }
       }
     });
 
@@ -125,23 +116,8 @@ public class GameScreen implements Screen {
     tyokiImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == Hands.GU.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
-        }
-        if(enemyHand == Hands.TYOKI.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
-        }
-        if(enemyHand == Hands.PA.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
-        }
+        drawEnemy();
         touchedTyoki();
-        if (result.getLoseCount() == 1){
-          miniY3Image.remove();
-        }
-        if (result.getLoseCount() == 3){
-          miniY2Image.remove();
-        }
       }
     });
 
@@ -153,23 +129,8 @@ public class GameScreen implements Screen {
     paImage.addListener(new ClickListener(){
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        enemyHand = TimeUtils.millis() % 3;
-        if(enemyHand == Hands.GU.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
-        }
-        if(enemyHand == Hands.TYOKI.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
-        }
-        if(enemyHand == Hands.PA.getId()){
-          misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
-        }
+        drawEnemy();
         touchedPa();
-        if (result.getLoseCount() == 1){
-          miniY3Image.remove();
-        }
-        if (result.getLoseCount() == 3){
-          miniY2Image.remove();
-        }
       }
     });
 
@@ -195,6 +156,26 @@ public class GameScreen implements Screen {
     stage.addActor(miniY1Image);
     stage.addActor(miniY2Image);
     stage.addActor(miniY3Image);
+  }
+
+  private void drawEnemy(){
+    enemyHand = TimeUtils.millis() % 3;
+
+    if(enemyHand == Hands.GU.getId()){
+      misterY.setDrawable(new SpriteDrawable(new Sprite(misterYguTexture)));
+    } else if(enemyHand == Hands.TYOKI.getId()){
+      misterY.setDrawable(new SpriteDrawable(new Sprite(misterYcyokiTexture)));
+    } else if(enemyHand == Hands.PA.getId()){
+      misterY.setDrawable(new SpriteDrawable(new Sprite(misterYpaTexture)));
+    }
+
+    if (result.getLoseCount() == 1){
+      miniY3Image.remove();
+      return;
+    }
+    if (result.getLoseCount() == 3){
+      miniY2Image.remove();
+    }
   }
 
   @Override
