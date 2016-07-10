@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         drawEnemy();
-        touchedGu();
+        touchedHands(Hands.GU.getId());
       }
     });
 
@@ -117,7 +117,7 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         drawEnemy();
-        touchedTyoki();
+        touchedHands(Hands.TYOKI.getId());
       }
     });
 
@@ -130,7 +130,7 @@ public class GameScreen implements Screen {
       @Override
       public void clicked(InputEvent event, float x, float y) {
         drawEnemy();
-        touchedPa();
+        touchedHands(Hands.PA.getId());
       }
     });
 
@@ -187,77 +187,41 @@ public class GameScreen implements Screen {
     stage.draw();
   }
 
-  /*グーチョキパーの条件付け
-  *グー　0　チョキ　1　パー　2
+  /*
+   ぐー = 0, ちょき = 1, ぱー = 2
+   ((自分の手-相手の)+3)%3
+   0ならあいこ
+   1なら負け
+   2なら勝ち
   */
-
-  private void touchedGu() {
+  private void touchedHands(int myHand){
     Gdx.gl.glClearColor(1, 0, 1, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    if(enemyHand == Hands.GU.getId()){
-      result.draw();
-      System.out.println("ひきわけ");
-    }
-    if(enemyHand == Hands.TYOKI.getId()){
-      result.win();
-      System.out.println("かち");
-    }
-    if(enemyHand == Hands.PA.getId()){
-      result.lose();
-      System.out.println(result.getLoseCount());
-      System.out.println("まけ");
-      if (result.getLoseCount() >= 5){
-        game.setScreen(new ResultScreen(game, result));
-        this.dispose();
-      }
-    }
-  }
+    int resultId = (int) (((myHand-enemyHand)+3) % 3);
 
-  private void touchedTyoki() {
-    Gdx.gl.glClearColor(1, 1, 0, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyHand == Hands.GU.getId()){
-      result.lose();
-      System.out.println(result.getLoseCount());
-      System.out.println("まけ");
-      if (result.getLoseCount() >= 5){
-        game.setScreen(new ResultScreen(game, result));
-        this.dispose();
-      }
-    }
-    if(enemyHand == Hands.TYOKI.getId()){
-      result.draw();
-      System.out.println("ひきわけ");
-    }
-    if((enemyHand == Hands.PA.getId())){
-      result.win();
-      System.out.println("かち");
-    }
-  }
+    switch (resultId){
+      case 0: // あいこ
+        Gdx.app.log(LOG_TAG, "あいこだ");
+        result.draw();
+        break;
+      case 1: // 負け
+        Gdx.app.log(LOG_TAG, "まけだ");
+        result.lose();
 
-  private void touchedPa() {
-    Gdx.gl.glClearColor(0, 1, 1, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    if(enemyHand == Hands.GU.getId()){
-      result.win();
-      System.out.println("かち");
-    }
-    if(enemyHand == Hands.TYOKI.getId()){
-      result.lose();
-      System.out.println(result.getLoseCount());
-      System.out.println("まけ");
-      if (result.getLoseCount() >= 5){
-        game.setScreen(new ResultScreen(game, result));
-        this.dispose();
-      }
-    }
-    if(enemyHand == Hands.PA.getId()){
-      result.draw();
-      System.out.println("ひきわけ");
+        if (result.getLoseCount() >= 5){
+          game.setScreen(new ResultScreen(game, result));
+          this.dispose();
+          return;
+        }
+
+        break;
+      case 2: // 勝ち
+        Gdx.app.log(LOG_TAG, "しょうりだ");
+        result.win();
+        break;
     }
   }
-  /*条件付けここまで*/
 
   private void touchedStartButton() {
     game.setScreen(new ResultScreen(game, result));
