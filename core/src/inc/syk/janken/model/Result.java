@@ -4,10 +4,10 @@ package inc.syk.janken.model;
  * Created by sota on 16/06/12.
  */
 public class Result {
-  private Long score = Long.valueOf(0);
-  private Long winCount = Long.valueOf(0);
-  private Long loseCount = Long.valueOf(0);
-  private Long drawCount = Long.valueOf(0);
+  private Long score = 0L;
+  private Long winCount = 0L;
+  private Long loseCount = 0L;
+  private Long drawCount = 0L;
 
   /**
    * じゃんけんに勝った
